@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ai-hallucination-demo
+    runtime: node
+    plan: free
+    buildCommand: "echo no build step"
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false        # you paste the real key in the Render dashboard
+      - key: TRUST_PROXY
+        value: "true"
+      - key: ACCESS_CODE
+        sync: false        # optional

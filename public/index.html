@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101b2d">
+<title>Same question, two answers: a look at AI hallucinations</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23101b2d'/%3E%3Ctext x='50' y='68' font-size='56' text-anchor='middle' fill='white'%3E?%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="kicker">AI hallucinations, live</p>
+    <h1>Same question. Two answers. Then check the evidence.</h1>
+    <p class="lede">AI models sometimes state wrong things in a confident voice. Ask one question, read both answers side by side, then see which claims hold up.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="caution" role="note">
+    <strong>Read this first:</strong> both models can make mistakes. One question can’t show which model is more reliable overall, and the claim checker can be wrong too.
+  </div>
+
+  <section class="card ask" aria-labelledby="ask-h">
+    <h2 id="ask-h"><span class="step">1</span> Ask one question</h2>
+    <form id="ask-form" novalidate>
+      <label for="q" class="sr">Your question</label>
+      <textarea id="q" rows="3" maxlength="300" placeholder="Try something specific and checkable, like a date, a name, or a book title." autocomplete="off"></textarea>
+      <div class="count" id="count">0 / 300</div>
+      <div class="access" id="access-row" hidden>
+        <label for="code">Access code</label>
+        <input id="code" type="password" autocomplete="off">
+      </div>
+      <div class="chips" aria-label="Example questions">
+        <span class="chips-label">Examples:</span>
+        <button type="button" class="chip" data-q="Who won the Nobel Prize in Literature in 1987, and what is their best-known work?">Nobel Prize 1987</button>
+        <button type="button" class="chip" data-q="Summarize the main findings of the 2017 paper “Attention Is All You Need” and name its authors.">“Attention Is All You Need”</button>
+        <button type="button" class="chip" data-q="What was the population of Reykjavik in 1950?">Reykjavik in 1950</button>
+        <button type="button" class="chip" data-q="Name three books written by the French philosopher Simone Weil and when each was published.">Simone Weil’s books</button>
+      </div>
+      <button class="btn primary" id="go" type="submit">Ask both models</button>
+      <p class="fine" id="settings-line"></p>
+    </form>
+    <div class="banner" id="setup-banner" role="alert" hidden></div>
+  </section>
+
+  <section class="card" id="answers" aria-labelledby="ans-h" aria-live="polite">
+    <h2 id="ans-h"><span class="step">2</span> Compare the answers</h2>
+    <div class="empty" id="empty-answers"><p><strong>Nothing to compare yet.</strong> Ask a question above and both answers will appear here.</p></div>
+    <div class="panels" id="panels" hidden></div>
+    <div class="banner" id="ask-error" role="alert" hidden></div>
+  </section>
+
+  <section class="card" id="evidence" aria-labelledby="ev-h" aria-live="polite">
+    <h2 id="ev-h"><span class="step">3</span> Inspect the evidence</h2>
+    <div class="empty" id="empty-evidence"><p><strong>No evidence check yet.</strong> Once both answers appear, you can check their key claims against web sources.</p></div>
+    <div class="row" id="check-row" hidden>
+      <button class="btn primary" id="check" type="button">Check key claims</button>
+    </div>
+    <div id="check-loading" hidden class="loading-note"><span class="spinner" aria-hidden="true"></span> Searching for sources and checking claims. This can take 10 to 30 seconds.</div>
+    <div class="banner" id="check-error" role="alert" hidden></div>
+    <div id="verdicts" hidden></div>
+    <p class="fine caveat" id="check-caveat" hidden>The checker is itself an AI model using web search. It can misread sources, miss evidence, or be wrong. Open the links and judge for yourself. “Unverified” means no clear evidence was found, not that the claim is false.</p>
+  </section>
+
+  <section class="card how" aria-labelledby="how-h">
+    <h2 id="how-h">How this demo works</h2>
+    <details>
+      <summary>Fair comparison and limitations</summary>
+      <ul>
+        <li><strong>Same input.</strong> Both models get the identical question and system instruction, with the same temperature and answer-length limit, sent at the same moment.</li>
+        <li><strong>Independent claim check.</strong> A separate search-enabled model reads both answers without knowing which model wrote which, picks key claims, and compares them with web sources.</li>
+        <li><strong>Links are filtered.</strong> Only source links the checker actually retrieved are shown. A claim without a verifiable link is marked Unverified.</li>
+        <li><strong>One question proves little.</strong> Results vary from run to run. This demo cannot say which model hallucinates more. That takes many questions and careful scoring.</li>
+        <li><strong>Everyone can be wrong.</strong> Both answers and the checker may contain errors. Treat verdicts as a starting point for reading the sources.</li>
+      </ul>
+      <p class="fine" id="how-settings"></p>
+    </details>
+  </section>
+</main>
+
+<footer class="wrap foot"><p>Answers come from AI models through OpenRouter. Nothing here is professional advice. Questions are kept only briefly in server memory so the checker can read the answers.</p></footer>
+<script src="app.js"></script>
+</body>
+</html>

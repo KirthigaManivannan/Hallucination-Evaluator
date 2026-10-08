@@ -1,0 +1,13 @@
+{
+  "name": "ai-hallucination-demo",
+  "version": "1.0.0",
+  "description": "Five-minute presentation demo: ask two models the same question, then inspect an evidence-based claim check.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/smoke.js"
+  },
+  "engines": { "node": ">=18" },
+  "license": "MIT",
+  "private": true
+}
